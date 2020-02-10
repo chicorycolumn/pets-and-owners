@@ -25,10 +25,9 @@ const fetchAllOwners = cb => {
 };
 
 const fetchOwnerById = (id, cb) => {
-  readdir("./data/owners/", (err, files) => {
-    // console.log(files)
+  readdir(__dirname + "/../data/owners/", (err, files) => {
     for (let i = 0; i < files.length; i++) {
-      readFile(`./data/owners/${files[i]}`, (err, owner) => {
+      readFile(`${__dirname}/../data/owners/${files[i]}`, (err, owner) => {
         if (err) {
           cb(err);
         } else {

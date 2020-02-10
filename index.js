@@ -6,7 +6,7 @@ const app = express(); // Now you've made a server!
 
 app.get("/api", getAllOwners);
 
-app.get("api/:id", getOwnerById);
+app.get("/api/:id", getOwnerById);
 
 app.listen(9090, () => {
   console.log(`listening on 9090...`);

@@ -14,9 +14,8 @@ const getAllOwners = (req, res) => {
 };
 
 const getOwnerById = (req, res) => {
-  console.log(req);
-  fetchOwnerById((err, owner) => {
-    const body = { owner };
+  fetchOwnerById(req.params.id, (err, owner) => {
+    const body = owner;
     res.send(body);
   });
 };
