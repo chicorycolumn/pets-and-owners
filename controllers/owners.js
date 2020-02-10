@@ -15,6 +15,11 @@ const getAllOwners = (req, res) => {
   })
 }
 
+
+const getOwnerById = () => {}
+
+
 module.exports = {
-  getAllOwners
+  getAllOwners,
+  getOwnerById
 };

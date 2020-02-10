@@ -1,5 +1,6 @@
 const {
-  getAllOwners
+  getAllOwners,
+  getOwnerById
 } = require('./controllers/owners.js');
 
 const express = require('express') //App and server mean same thing when we talk in express.

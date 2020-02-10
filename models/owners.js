@@ -20,12 +20,17 @@ const fetchAllOwners = (cb) => { //magically get err and data
   })
 };
 
+const fetchOwnerById = (id, cb) => {
+  readdir("./data/owners/", (err, files)=>{
+    console.log(files)
 
+  })
+};
 
 
 const createOwner = (data, cb) => {};
 
-const fetchOwnerById = (id, cb) => {};
+
 
 const updateOwner = (id, data, cb) => {};
 
