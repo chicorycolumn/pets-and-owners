@@ -1,4 +1,4 @@
-const { readFile, readdir } = require("fs");
+const { readFile, readdir, writeFile } = require("fs");
 
 const fetchAllOwners = cb => {
   //magically get err and data
@@ -43,22 +43,22 @@ const fetchOwnerById = (id, cb) => {
 
 const fetchPetsByOwner = (id, cb) => {
   readdir(__dirname + "/../data/pets/", (err, files) => {
-    let arrayOfParsedPets = []
-    let count = 0
+    let arrayOfParsedPets = [];
+    let count = 0;
     for (let i = 0; i < files.length; i++) {
       readFile(`${__dirname}/../data/pets/${files[i]}`, (err, pet) => {
-        count++
+        count++;
         if (err) {
           cb(err);
         } else {
           const parsedPet = JSON.parse(pet);
-          
+
           if (parsedPet.owner === id) {
-            arrayOfParsedPets.push(parsedPet)
+            arrayOfParsedPets.push(parsedPet);
           }
-          
-          if (count===files.length){
-            cb(null, arrayOfParsedPets)
+
+          if (count === files.length) {
+            cb(null, arrayOfParsedPets);
           } //If you've put all the ones we want, now invoke ;
         }
       });
@@ -83,10 +83,32 @@ const fetchPetByID = (id, cb) => {
   });
 };
 
-
 const createOwner = (data, cb) => {};
 
-const updateOwner = (id, data, cb) => {};
+const updateOwner = (id, data, cb) => {
+  fetchOwnerById(id, (err, parsedOwner) => {
+    if (data.age !== undefined) {
+      parsedOwner.age = data.age;
+    }
+    if (data.name !== undefined) {
+      parsedOwner.name = data.name;
+    }
+    // console.log(owner);
+    let stringyParsedOwner = JSON.stringify(parsedOwner);
+    writeFile(
+      `${__dirname}/../data/owners/${id}.json`,
+      stringyParsedOwner,
+      err => {
+        if (err) throw err;
+        console.log("Owner details updated!");
+      }
+    );
+    if (err) cb(err);
+    else {
+      cb(null, parsedOwner);
+    }
+  });
+};
 
 const deleteOwnerById = (id, cb) => {};
 

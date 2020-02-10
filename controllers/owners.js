@@ -36,9 +36,17 @@ const getPetByID = (req, res) => {
   });
 };
 
+const updateOwnerDetails = (req, res) => {
+  updateOwner(req.params.id, req.body, (err, updatedOwner) => {
+    const newBody = updatedOwner;
+    res.status(201).send(newBody);
+  });
+};
+
 module.exports = {
   getAllOwners,
   getOwnerById,
   getPetsByOwner,
-  getPetByID
+  getPetByID,
+  updateOwnerDetails
 };
