@@ -1,10 +1,22 @@
-const {readFile} = require("fs")
+const {readFile, readdir} = require("fs")
 
-const fetchAllOwners = (cb) => { //magically get err and data
-  readFile('./data/owners/o1.json', 'utf8', (err, data)=>{
-    console.log(data)
-    if (err){cb(err)}
-    else{cb(null, JSON.parse(data) )}
+const fetchAllOwners = (cb) => { //magically get err and data  
+  
+  readdir("./data/owners/", (err, files)=>{
+    console.log(files)
+
+    let arrayOfObjects = []
+
+    for (let i = 0; i < files.length; i++){
+      readFile(`./data/owners/${files[i]}`, (err, data) => {
+        if (err){cb(err)}
+        else{arrayOfObjects.push(JSON.parse(data))}
+      
+        if (arrayOfObjects.length === files.length){
+          cb(null, arrayOfObjects)
+        } 
+      })
+    }
   })
 };
 
