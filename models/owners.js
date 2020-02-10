@@ -41,7 +41,6 @@ const fetchOwnerById = (id, cb) => {
   });
 };
 
-
 const fetchPetsByOwner = (id, cb) => {
   readdir(__dirname + "/../data/pets/", (err, files) => {
     let arrayOfParsedPets = []
@@ -67,6 +66,23 @@ const fetchPetsByOwner = (id, cb) => {
   });
 };
 
+const fetchPetByID = (id, cb) => {
+  readdir(__dirname + "/../data/pets/", (err, files) => {
+    for (let i = 0; i < files.length; i++) {
+      readFile(`${__dirname}/../data/pets/${files[i]}`, (err, pet) => {
+        if (err) {
+          cb(err);
+        } else {
+          const parsedPet = JSON.parse(pet);
+          if (parsedPet.id === id) {
+            cb(null, parsedPet);
+          }
+        }
+      });
+    }
+  });
+};
+
 
 const createOwner = (data, cb) => {};
 
@@ -78,6 +94,7 @@ module.exports = {
   createOwner,
   fetchAllOwners,
   fetchOwnerById,
+  fetchPetByID,
   updateOwner,
   deleteOwnerById,
   fetchPetsByOwner

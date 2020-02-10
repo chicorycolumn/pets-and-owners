@@ -3,6 +3,7 @@ const {
   fetchAllOwners,
   fetchOwnerById,
   fetchPetsByOwner,
+  fetchPetByID,
   updateOwner,
   deleteOwnerById
 } = require("../models/owners.js");
@@ -28,8 +29,16 @@ const getPetsByOwner = (req, res) => {
   });
 };
 
+const getPetByID = (req, res) => {
+  fetchPetByID(req.params.id, (err, pet) => {
+    const body = pet;
+    res.send(body);
+  });
+};
+
 module.exports = {
   getAllOwners,
   getOwnerById,
-  getPetsByOwner
+  getPetsByOwner,
+  getPetByID
 };
