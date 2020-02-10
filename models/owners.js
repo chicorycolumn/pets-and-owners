@@ -1,4 +1,4 @@
-const { readFile, readdir } = require("fs");
+const { readFile, readdir, writeFile } = require("fs");
 
 const fetchAllOwners = cb => {
   //magically get err and data
@@ -86,7 +86,73 @@ const fetchPetByID = (id, cb) => {
 
 const createOwner = (data, cb) => {};
 
-const updateOwner = (id, data, cb) => {};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const updateOwner = (id, data, cb) => {
+
+
+//CANNIBALISED
+  readdir(__dirname + "/../data/owners/", (err, files) => {
+    for (let i = 0; i < files.length; i++) {
+      readFile(`${__dirname}/../data/owners/${files[i]}`, (err, owner) => {
+        if (err) {
+          cb(err);
+        } else {
+          const parsedOwner = JSON.parse(owner);
+          if (parsedOwner.id === id) {
+            
+
+
+
+            updatedOwner = {...parsedOwner}
+
+            if (data.age !== undefined){updatedOwner.age = data.age}
+            if (data.name !== undefined){updatedOwner.name = data.name}
+
+            const stringyUpdatedOwner = JSON.stringify(updatedOwner)
+            
+            writeFile(`${__dirname}/../data/owners/${id}.json`, stringyUpdatedOwner, 'utf8', (err) => {
+              if (err){throw err}
+              //else{console.log(`I wrote a file at ${id}`)}
+              else{cb(null, JSON.parse(stringyUpdatedOwner))}
+            })
+
+
+
+
+
+
+
+
+          }
+        }
+      });
+    }
+  });
+
+
+
+
+
+
+
+
+
+
+};
 
 const deleteOwnerById = (id, cb) => {};
 
