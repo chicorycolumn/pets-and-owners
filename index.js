@@ -1,5 +1,3 @@
-//Hello what a lovely index file!!!
-// Thank you I made it myself!
 const {
   getAllOwners,
   getOwnerById,
