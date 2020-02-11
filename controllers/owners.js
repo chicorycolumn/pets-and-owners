@@ -46,10 +46,35 @@ const updateOwnerDetails = (req, res) => {
   });
 };
 
+const addNewOwner = (req, res) =>{
+  createOwner(req.body, (err, data) => {
+    if (err) {
+      console.log(err);
+    } else {
+
+
+      // fetchAllOwners((err, owners) => {
+      //   const body = { owners };
+      //   res.send(body);
+      // });
+
+
+      getAllOwners(req, res)
+
+
+
+      // res.send(data);
+
+
+    }
+  })
+}
+
 module.exports = {
   getAllOwners,
   getOwnerById,
   getPetsByOwner,
   getPetByID,
-  updateOwnerDetails
+  updateOwnerDetails,
+  addNewOwner
 };

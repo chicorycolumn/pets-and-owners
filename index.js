@@ -17,13 +17,9 @@ app.use(express.json());
 app.use("/api", apiRouter);
 
 // app.get("/api/owners", getAllOwners);
-
 // app.get("/api/owners/:id", getOwnerById);
-
 // app.get("/api/owners/:id/pets", getPetsByOwner);
-
 // app.get("/api/pets/:id", getPetByID);
-
 // app.post("/api/owners/:id", updateOwnerDetails);
 
 app.post("/api/owners/:id", updateOwnerDetails);

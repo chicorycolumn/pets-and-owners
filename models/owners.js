@@ -1,7 +1,6 @@
 const { readFile, readdir, writeFile } = require("fs");
 
 const fetchAllOwners = cb => {
-  //magically get err and data
 
   readdir("./data/owners/", (err, files) => {
     console.log(files);
@@ -83,8 +82,6 @@ const fetchPetByID = (id, cb) => {
   });
 };
 
-const createOwner = (data, cb) => {};
-
 const updateOwner = (id, data, cb) => {
   //CANNIBALISED
   readdir(__dirname + "/../data/owners/", (err, files) => {
@@ -126,6 +123,29 @@ const updateOwner = (id, data, cb) => {
     }
   });
 };
+
+const createOwner = (data, cb) => {
+  
+  let timestamp = new Date().getTime()
+  
+  data.id = timestamp
+
+  writeFile(`${__dirname}/../data/owners/o${timestamp}.js`, JSON.stringify(data), (err)=>{
+    if (err){cb(err)}
+    else{
+      cb(null, {msg: "you wrote something!!!"})
+    }
+  })
+
+
+
+
+
+};
+
+
+
+
 
 const deleteOwnerById = (id, cb) => {};
 
