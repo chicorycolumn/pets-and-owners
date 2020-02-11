@@ -6,11 +6,11 @@ const {
   updateOwnerDetails
 } = require("./controllers/owners.js");
 
+const apiRouter = require("./routes/api-router.js");
+
 const express = require("express"); //App and server mean same thing when we talk in express.
 
 const app = express(); // Now you've made a server!
-
-const apiRouter = require("./routes/api-router.js");
 
 app.use(express.json());
 
