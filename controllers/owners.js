@@ -47,7 +47,18 @@ const updateOwnerDetails = (req, res) => {
 };
 
 const addNewOwner = (req, res) =>{
+  
+  if (req.body.name === undefined || req.body.age === undefined){
+
+    res.status(400).send('I am afraid you have not formatted the new user correctly.');
+
+
+  } else {
+  
+  
+  
   createOwner(req.body, (err, data) => {
+    
     if (err) {
       console.log(err);
     } else {
@@ -68,6 +79,7 @@ const addNewOwner = (req, res) =>{
 
     }
   })
+}
 }
 
 module.exports = {
