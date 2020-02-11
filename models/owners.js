@@ -76,9 +76,10 @@ const fetchPetsByOwner = (id, cb) => {
             arrayOfParsedPets.push(parsedPet);
           }
 
-          if (count === files.length) {
-            cb(null, arrayOfParsedPets);
-          } //If you've put all the ones we want, now invoke ;
+          if (count === files.length) { //If you've put all the ones we want, now invoke ;
+            if (arrayOfParsedPets.length === 0){cb("oh damn")}
+            else {cb(null, arrayOfParsedPets)}
+          } 
         }
       });
     }

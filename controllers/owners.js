@@ -30,6 +30,9 @@ const getOwnerById = (req, res) => {
 
 const getPetsByOwner = (req, res) => {
   fetchPetsByOwner(req.params.id, (err, pet) => {
+    
+    if (err){res.status(400).send('How can I give you the pets if that owner doesn"t exist???')}
+    
     const body = pet;
     res.send(body);
   });
