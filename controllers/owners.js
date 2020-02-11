@@ -5,7 +5,8 @@ const {
   fetchPetsByOwner,
   fetchPetByID,
   updateOwner,
-  deleteOwnerById
+  deleteOwnerById,
+  createPet
 } = require("../models/owners.js");
 
 const getAllOwners = (req, res) => {
@@ -58,28 +59,36 @@ const addNewOwner = (req, res) =>{
   
   
   createOwner(req.body, (err, data) => {
-    
     if (err) {
       console.log(err);
     } else {
-
-
+      getAllOwners(req, res)
       // fetchAllOwners((err, owners) => {
       //   const body = { owners };
       //   res.send(body);
       // });
 
-
-      getAllOwners(req, res)
-
-
-
       // res.send(data);
-
-
     }
   })
 }
+}
+
+const addPetToOwner = (req, res) => {
+  
+  fetchOwnerById(req.params.id, (err, owner) => {
+
+    if (err){
+      res.status(400).send('No such person, no such zone.');
+    } else {
+
+      createPet(req.params.id, req.body, (err) => {
+        if (err){console.log(err)}
+      })
+
+    }
+
+  });
 }
 
 module.exports = {
@@ -88,5 +97,6 @@ module.exports = {
   getPetsByOwner,
   getPetByID,
   updateOwnerDetails,
-  addNewOwner
+  addNewOwner,
+  addPetToOwner
 };

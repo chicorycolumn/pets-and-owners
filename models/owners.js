@@ -128,7 +128,7 @@ const createOwner = (data, cb) => {
   
   let timestamp = new Date().getTime()
   
-  data.id = timestamp
+  data.id = `o${timestamp}`
 
   writeFile(`${__dirname}/../data/owners/o${timestamp}.js`, JSON.stringify(data), (err)=>{
     if (err){cb(err)}
@@ -144,6 +144,19 @@ const createOwner = (data, cb) => {
 };
 
 
+const createPet = (ownerID, data, cb) => {
+  
+  let timestamp = new Date().getTime()
+  data.id = `p${timestamp}`
+  data.owner = ownerID
+  
+  writeFile(`${__dirname}/../data/pets/p${timestamp}.js`, JSON.stringify(data), (err)=>{
+    if (err){cb(err)}
+    else{
+      cb(null, {msg: "you wrote something!!!"})
+    }
+  })
+}
 
 
 
@@ -156,5 +169,7 @@ module.exports = {
   fetchPetByID,
   updateOwner,
   deleteOwnerById,
-  fetchPetsByOwner
+  fetchPetsByOwner,
+  createPet
+
 };
