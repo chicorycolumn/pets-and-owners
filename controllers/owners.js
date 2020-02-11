@@ -18,8 +18,13 @@ const getAllOwners = (req, res) => {
 
 const getOwnerById = (req, res) => {
   fetchOwnerById(req.params.id, (err, owner) => {
+    
+    if (err){res.status(400).send('No such person, no such zone.')
+  }
+    else {
     const body = owner;
     res.send(body);
+    }
   });
 };
 
@@ -82,8 +87,9 @@ const addPetToOwner = (req, res) => {
       res.status(400).send('No such person, no such zone.');
     } else {
 
-      createPet(req.params.id, req.body, (err) => {
+      createPet(req.params.id, req.body, (err, data) => {
         if (err){console.log(err)}
+        else {res.status(201).send('You did it, buddy')}
       })
 
     }

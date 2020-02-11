@@ -25,17 +25,37 @@ const fetchAllOwners = cb => {
 
 const fetchOwnerById = (id, cb) => {
   readdir(__dirname + "/../data/owners/", (err, files) => {
+    
+    let count = 0
+
+    let haveInvoked = false
+
     for (let i = 0; i < files.length; i++) {
       readFile(`${__dirname}/../data/owners/${files[i]}`, (err, owner) => {
+        
+        count++
+
         if (err) {
           cb(err);
         } else {
           const parsedOwner = JSON.parse(owner);
           if (parsedOwner.id === id) {
+            
+            console.log("Good user!")
+            
             cb(null, parsedOwner);
+            haveInvoked = true
+          
+          } else if (haveInvoked === false && count === files.length) {
+            
+            console.log("No good users!")
+            cb("oh fuck")
           }
         }
       });
+
+
+      
     }
   });
 };
@@ -130,7 +150,7 @@ const createOwner = (data, cb) => {
   
   data.id = `o${timestamp}`
 
-  writeFile(`${__dirname}/../data/owners/o${timestamp}.js`, JSON.stringify(data), (err)=>{
+  writeFile(`${__dirname}/../data/owners/o${timestamp}.json`, JSON.stringify(data), (err)=>{
     if (err){cb(err)}
     else{
       cb(null, {msg: "you wrote something!!!"})
@@ -143,14 +163,13 @@ const createOwner = (data, cb) => {
 
 };
 
-
 const createPet = (ownerID, data, cb) => {
   
   let timestamp = new Date().getTime()
   data.id = `p${timestamp}`
   data.owner = ownerID
   
-  writeFile(`${__dirname}/../data/pets/p${timestamp}.js`, JSON.stringify(data), (err)=>{
+  writeFile(`${__dirname}/../data/pets/p${timestamp}.json`, JSON.stringify(data), (err)=>{
     if (err){cb(err)}
     else{
       cb(null, {msg: "you wrote something!!!"})
