@@ -14,7 +14,7 @@ const express = require("express"); //App and server mean same thing when we tal
 
 const app = express(); // Now you've made a server!
 
-app.use(express.json);
+app.use(express.json());
 
 app.use("/api", apiRouter);
 
