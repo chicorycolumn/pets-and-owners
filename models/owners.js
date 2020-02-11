@@ -86,26 +86,43 @@ const fetchPetByID = (id, cb) => {
 const createOwner = (data, cb) => {};
 
 const updateOwner = (id, data, cb) => {
-  fetchOwnerById(id, (err, parsedOwner) => {
-    if (data.age !== undefined) {
-      parsedOwner.age = data.age;
-    }
-    if (data.name !== undefined) {
-      parsedOwner.name = data.name;
-    }
-    // console.log(owner);
-    let stringyParsedOwner = JSON.stringify(parsedOwner);
-    writeFile(
-      `${__dirname}/../data/owners/${id}.json`,
-      stringyParsedOwner,
-      err => {
-        if (err) throw err;
-        console.log("Owner details updated!");
-      }
-    );
-    if (err) cb(err);
-    else {
-      cb(null, parsedOwner);
+  //CANNIBALISED
+  readdir(__dirname + "/../data/owners/", (err, files) => {
+    for (let i = 0; i < files.length; i++) {
+      readFile(`${__dirname}/../data/owners/${files[i]}`, (err, owner) => {
+        if (err) {
+          cb(err);
+        } else {
+          const parsedOwner = JSON.parse(owner);
+          if (parsedOwner.id === id) {
+            updatedOwner = { ...parsedOwner };
+
+            if (data.age !== undefined) {
+              updatedOwner.age = data.age;
+            }
+            if (data.name !== undefined) {
+              updatedOwner.name = data.name;
+            }
+
+            const stringyUpdatedOwner = JSON.stringify(updatedOwner);
+
+            writeFile(
+              `${__dirname}/../data/owners/${id}.json`,
+              stringyUpdatedOwner,
+              "utf8",
+              err => {
+                if (err) {
+                  throw err;
+                }
+                //else{console.log(`I wrote a file at ${id}`)}
+                else {
+                  cb(null, JSON.parse(stringyUpdatedOwner));
+                }
+              }
+            );
+          }
+        }
+      });
     }
   });
 };

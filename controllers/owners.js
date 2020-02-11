@@ -37,9 +37,12 @@ const getPetByID = (req, res) => {
 };
 
 const updateOwnerDetails = (req, res) => {
-  updateOwner(req.params.id, req.body, (err, updatedOwner) => {
-    const newBody = updatedOwner;
-    res.status(201).send(newBody);
+  updateOwner(req.params.id, req.body, (err, data) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(data);
+    }
   });
 };
 
